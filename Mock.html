@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Mock</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="content">
+      <h1>
+        Mock
+        
+      </h1>
+
+      
+        <div id="moduledoc" class="docstring">
+          <p>Mock modules for testing purposes. Usually inside a unit test.</p>
+
+<h2>Example</h2>
+
+<pre><code>defmodule MyTest do
+  use ExUnit.Case
+  import Mock
+
+  test &quot;get&quot; do
+    with_mock HTTPotion,
+        [get: fn(&quot;http://example.com&quot;, _headers) -&gt;
+                HTTPotion.Response.new(status_code: 200,
+                    body: &quot;hello&quot;) end] do
+      # Code which calls HTTPotion.get
+      # Check that the call was made as we expected
+      assert called HTTPotion.get(&quot;http://example.com&quot;, :_)
+    end
+  end
+end
+</code></pre>
+
+        </div>
+      
+
+      <a href="" target="_blank" class="view_source">Source</a>
+
+      
+
+      
+
+      
+
+      
+        <h2 id="macros_summary">Macros summary</h2>
+        <ul class="summary">
+          <li>
+  <span class="summary_signature">
+    <a href="#called/1">called/1</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#test_with_mock/5">test_with_mock/5</a>
+  </span>
+</li>
+<li>
+  <span class="summary_signature">
+    <a href="#with_mock/4">with_mock/4</a>
+  </span>
+</li>
+
+        </ul>
+      
+
+      
+
+      
+
+      
+        <div id="macros_details" class="details_list">
+          <h2>Macros</h2>
+          <div class="detail">
+  <p class="signature" id="called/1">
+    <strong>called(arg1)</strong>
+  </p>
+  <div class="docstring"><p>Use inside a <code>with_mock</code> block to determine whether
+a mocked function was called as expected.</p>
+
+<h2>Example</h2>
+
+<pre><code>assert called HTTPotion.get(&quot;http://example.com&quot;)
+</code></pre>
+</div>
+  
+</div><div class="detail">
+  <p class="signature" id="test_with_mock/5">
+    <strong>test_with_mock(test_name, mock_module, opts // [], mocks, test_block)</strong>
+  </p>
+  <div class="docstring"><p>Shortcut to avoid multiple blocks when a test requires a single
+mock.</p>
+
+<p>For full description see <code>with_mock</code>.</p>
+
+<h2>Example</h2>
+
+<pre><code>test_with_mock &quot;test_name&quot;, HTTPotion,
+  [get: fn(_url) -&gt; &quot;&lt;html&gt;&lt;/html&gt;&quot;] do
+  HTTPotion.get(&quot;http://example.com&quot;)
+  assert called HTTPotion.get(&quot;http://example.com&quot;)
+end
+</code></pre>
+</div>
+  
+</div><div class="detail">
+  <p class="signature" id="with_mock/4">
+    <strong>with_mock(mock_module, opts // [], mocks, test)</strong>
+  </p>
+  <div class="docstring"><p>Mock up <code>mock_module</code> with functions specified as a keyword
+list of function_name:implementation <code>mocks</code> for the duration
+of <code>test</code>.</p>
+
+<p><code>opts</code> List of optional arguments passed to meck. <code>:passthrough</code> will
+ passthrough arguments to the original module.</p>
+
+<h2>Example</h2>
+
+<pre><code>with_mock(HTTPPotion, [get: fn(&quot;http://example.com&quot;) -&gt;
+     &quot;&lt;html&gt;&lt;/html&gt;&quot; end] do
+   # Tests that make the expected call
+   assert called HTTPotion.get(&quot;http://example.com&quot;)
+end
+</code></pre>
+</div>
+  
+</div>
+        </div>
+      
+
+      
+    </div>
+  </body>
+</html>
