@@ -82,8 +82,8 @@ defmodule Mock do
     ## Example
 
         assert called HTTPotion.get("http://example.com")
-    """ 
-  defmacro called({ {:., _, [ module , f ]} , _, args }) do    
+    """
+  defmacro called({ {:., _, [ module , f ]} , _, args }) do
     quote do
       :meck.called unquote(module), unquote(f), unquote(args)
     end
